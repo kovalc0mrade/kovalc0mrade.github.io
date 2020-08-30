@@ -6,7 +6,7 @@ date:   2020-08-30 06:35:03 +0300
 This problem comes up almost for every developer during his career. The reasons might be different: for example, you might have a personal account and corporate account, or you have a separate account for freelance, or maybe you wanna work from the shadow and make commits from someone's account.
 
 ![](/assets/images/multiple-github-accounts.jpg)
-In this article, we will use authentication with GitHub via ssh and the solution is pretty straightforward - multiple ssh keys settings for different GitHub accounts. This case is taken from my own experience, so I'll show all the steps on Mac machine, but it shouldn't be complicated to repeat on Windows/Linux machine. For more detailed instructions, please refer to [Github's documentation](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+In this article, I will use authentication with GitHub via ssh and the solution is pretty straightforward - multiple ssh keys settings for different GitHub accounts. This case is taken from my own experience, so I'll show all the steps on Mac machine, but it shouldn't be complicated to repeat on Windows/Linux machine. For more detailed instructions, please refer to [Github's documentation](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
 
 Let's imagine that we have 2 GitHub accounts. The first one is - *kovalc0mrade-personal* and the second one is - *kovalc0mrade-company*.
 
@@ -53,19 +53,23 @@ $ cat ~/.ssh/github_company.pub
 Now it's time to clone repositories and configure them.
 As was mentioned in the beginning, I'll use ssh links for this purpose.
 ```
-$ clone git@github.com:kovalc0mrade-personal/your-repository.git
-$ clone git@github.com:kovalc0mrade-company/your-repository.git
+$ clone git@github.com:kovalc0mrade-personal/your-repository-1.git
+$ clone git@github.com:kovalc0mrade-company/your-repository-2.git
 ```
 Since I have different emails, I have to update a local git config with commands.
 ```
+// In your-repository-1 folder
 $ git config user.email "kovalc0mrade-personal@email.com"
+
+// In your-repository-2 folder
 $ git config user.email "kovalc0mrade-company@email.com"
 ```
 Remote origin should also be updated to use proper ssh key.
-Get current remote origin:
+Get current remote origin command:
 ```
+// In repository folder
+// Output example: git@github.com:kovalc0mrade-personal/your-repository.git
 git remote get-url origin
-#Example: git@github.com:kovalc0mrade-personal/your-repository.git
 ```
 And set new origin with updated *github.com* to *github.com-kovalc0mrade-personal* or *github.com-kovalc0mrade-company*.
 ```
